@@ -16,19 +16,18 @@ beforeEach(async () => {
   }
 }
 
-
+const body = createbody();
 
 describe('Testa POST /items ', () => {
 
   it('Deve retornar 201, se cadastrado um item no formato correto',async ()=>{
-    const body = createbody();
     const result = await supertest(app).post("/items").send(body);
     expect(result.status).toBe(201);
 
   });
 
   it('Deve retornar 409, ao tentar cadastrar um item que exista',async()=>{
-    const body = createbody();
+    
     await supertest(app).post("/items").send(body);
     const result = await supertest(app).post("/items").send(body);
     expect(result.status).toBe(409);
@@ -48,7 +47,7 @@ describe('Testa GET /items ', () => {
 
 describe('Testa GET /items/:id ', () => {
   it('Deve retornar status 200 e um objeto igual a o item cadastrado',async()=>{
-    const body = createbody();
+    
     const resultOne = await supertest(app).post("/items").send(body);
     
     const result = await supertest(app).get(`/items/${resultOne.body.id}`).send();
