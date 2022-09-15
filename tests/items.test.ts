@@ -52,11 +52,14 @@ describe('Testa GET /items/:id ', () => {
     const resultOne = await supertest(app).post("/items").send(body);
     
     const result = await supertest(app).get(`/items/${resultOne.body.id}`).send();
-    console.log(result.body);
     expect(result.body).toEqual({...body,id:resultOne.body.id});
     expect(result.status).toBe(200);
   });
-  it.todo('Deve retornar status 404 caso não exista um item com esse id');
+  it('Deve retornar status 404 caso não exista um item com esse id',async()=>{
+    
+    const result = await supertest(app).get(`/items/2`).send();
+    expect(result.status).toBe(404);
+  });
 });
 
 afterAll(async () => {
